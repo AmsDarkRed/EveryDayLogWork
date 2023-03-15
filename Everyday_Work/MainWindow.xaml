@@ -1,0 +1,68 @@
+﻿<Window x:Class="Everyday_Work.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Everyday_Work"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:maincmd="clr-namespace:Everyday_Work.Command"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        Closing="Window_Closing"
+        mc:Ignorable="d"
+        Title="每日工作日志生成" Height="450" Width="800" WindowStartupLocation="CenterScreen" Icon="/workdays_wor.ico">
+    <Grid>
+        <Grid.DataContext>
+            <maincmd:MainDelegateCmd/>
+        </Grid.DataContext>
+        <behaviors:Interaction.Triggers>
+            <behaviors:EventTrigger EventName="Loaded">
+                <behaviors:InvokeCommandAction Command="{Binding LoadedCmd}"/>
+            </behaviors:EventTrigger>
+        </behaviors:Interaction.Triggers>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Border Background="BurlyWood" Grid.ColumnSpan="4" Margin="5">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="重新生成" Width="120" Height="80" Margin="5" Command="{Binding ANewCreateCmd}"/>
+                <Button Content="设置生成目录" Width="120" Height="80" Margin="5" Command="{Binding SetPathCmd}"/>
+                <Button Content="系统设置" Width="120" Height="80" Margin="5"/>
+                <Button Content="同步日志" Width="120" Height="80" Margin="5" Command="{Binding SyncFile}"/>
+                <Button Content="退出" Width="120" Height="80" Margin="5"/>
+            </StackPanel>
+        </Border>
+        <avalonEdit:TextEditor Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" Grid.RowSpan="3" Margin="10" BorderThickness="5"  Background="#E1FFFF" xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" 
+                                                       Name="PreviewCode" FontFamily="Consolas"
+                                                       ShowLineNumbers="True"
+                                                       WordWrap="True"
+                                                       SyntaxHighlighting="C#"
+                                                       FontSize="10pt"
+                                                        Document="{Binding MainTextDocument}"
+                                                       VerticalScrollBarVisibility="Auto" 
+                                                        HorizontalScrollBarVisibility="Auto"
+                                                       >
+            <behaviors:Interaction.Behaviors>
+                <maincmd:AvalonEditBehaviour InputText="{Binding TexteDitorContex}"/>
+            </behaviors:Interaction.Behaviors>
+            <avalonEdit:TextEditor.Effect>
+                <DropShadowEffect ShadowDepth="-4" BlurRadius="5" Color="LightGray"/>
+            </avalonEdit:TextEditor.Effect>
+        </avalonEdit:TextEditor>
+        <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" Margin="10,0,10,0" BorderThickness="5">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="-4" BlurRadius="5" Color="Red"/>
+            </Border.Effect>
+            <TextBlock  Text="{Binding WindowsTipStr,StringFormat=信息提示:{0}}"   Block.TextAlignment="Left" Padding="5,3,0,0"  TextBlock.Foreground="#6495ED"  TextBlock.FontSize="18" Background="Azure"/>
+        </Border>
+    </Grid>
+</Window>
