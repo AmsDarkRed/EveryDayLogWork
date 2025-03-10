@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Everyday_Work
 {
     /// <summary>
-    /// 单例父类
+    /// 单例父类(分支测试)
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class CommandBase<T> where T : class
