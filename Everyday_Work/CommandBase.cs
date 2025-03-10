@@ -21,5 +21,18 @@ namespace Everyday_Work
         /// 返回单例子类
         /// </summary>
         public static T CanheObject { get { return instance.Value; } }
+
+        /// <summary>
+        /// 测试
+        /// </summary>
+        private DelegateCommand _fieldName;
+        public DelegateCommand CommandName =>
+            _fieldName ?? (_fieldName = new DelegateCommand(ExecuteCommandName));
+
+        void ExecuteCommandName()
+        {
+
+        }
+
     }
 }
